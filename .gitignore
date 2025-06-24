@@ -1,0 +1,55 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+
+# Virtual environment
+venv/
+env/
+.main_env/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# VSCode settings
+.vscode/
+
+# Excel/Output files
+*.xlsx
+*.xls
+*.csv
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# Docker
+*.tar
+*.img
+docker-compose.override.yml
+
+# GitHub/IDE
+.idea/
+*.swp
+*.swo
+
+# dotenv / secrets
+.env
+.env.*
+
+# Compiled Python extensions
+build/
+dist/
+*.egg-info/
+
+# Local test reports
+coverage/
+htmlcov/
+.cache/
