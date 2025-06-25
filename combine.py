@@ -1,7 +1,6 @@
 from selenium import webdriver
 import pandas as pd
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 import time
@@ -11,12 +10,9 @@ import os
 # Dates
 t_day = datetime.datetime.now()
 if t_day.weekday() == 0:  # Monday
-
     yesterday = (t_day - datetime.timedelta(days=3)).date()
 else:
-
     yesterday = (t_day - datetime.timedelta(days=1)).date()
-
 
 # Headless Chrome for server use
 chrome_options = Options()
@@ -25,9 +21,14 @@ chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--disable-gpu")
 chrome_options.add_argument("--window-size=1920,1080")
+chrome_options.binary_location = "/usr/bin/chromium"
+
+# driver = webdriver.Chrome(service=Service("/usr/bin/chromedriver"), options=chrome_options)
+
+
 
 def fetch_tenders(url, yesterday, cpv_name):
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+    driver = webdriver.Chrome(service=Service("/usr/bin/chromedriver"), options=chrome_options)
     driver.get(url)
     time.sleep(10)
 
@@ -49,7 +50,7 @@ def fetch_tenders(url, yesterday, cpv_name):
 
             publication_date = datetime.datetime.strptime(publication_date_str, "%d/%m/%Y").date()
             if publication_date == yesterday:
-                di={
+                di = {
                     "Notice Number": notice_number,
                     "Link": notice_link,
                     "Description": description,
@@ -59,7 +60,6 @@ def fetch_tenders(url, yesterday, cpv_name):
                     "CPV Group": cpv_name
                 }
                 data.append(di)
-                
 
     driver.quit()
     return pd.DataFrame(data)
@@ -74,12 +74,10 @@ url_fin = f"https://ted.europa.eu/en/search/result?search-scope=ACTIVE&scope=ACT
 
 # Scrape both
 df_it = fetch_tenders(url_it, yesterday, "IT/Consulting")
-
 df_fin = fetch_tenders(url_fin, yesterday, "Financial Services")
 
 # Combine
 df_all = pd.concat([df_it, df_fin], ignore_index=True)
-
 
 # Update history file
 history_file = "tender_history.xlsx"
@@ -92,7 +90,7 @@ else:
 
 df_updated.to_excel(history_file, index=False)
 
-
+# Output
 if df_all.empty:
     print("No new tender")
 else:
@@ -107,6 +105,7 @@ else:
         print(f"CPV Group       : {row['CPV Group']}")
         print("=" * 100)
         print("\n")
+
 
 
 

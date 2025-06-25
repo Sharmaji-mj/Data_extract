@@ -1,0 +1,35 @@
+FROM python:3.13
+ 
+ 
+
+ 
+RUN apt install git
+ 
+# Install Chromium
+RUN apt-get update && apt-get install -y wget gnupg2
+ 
+# Add Google’s signing key & Chrome repo
+RUN mkdir -p /etc/apt/keyrings && \
+    curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /etc/apt/keyrings/google.gpg && \
+    echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/google.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
+ 
+# Install specific version (v114)
+RUN apt-get update && apt-get install -y \
+    google-chrome-stable
+
+
+# Set environment variable for Chrome binary
+ENV CHROME_BIN=/usr/bin/chromium
+
+# Set work directory
+WORKDIR /app
+ 
+# Copy files
+COPY . .
+ 
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+ 
+# Run script
+CMD ["tail", "-f","/dev/null"]
+
