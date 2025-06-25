@@ -1,55 +1,53 @@
-# Python cache files
+# === Python ===
 __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
 *.pdb
 
-# Virtual environment
+# === Virtual Environments ===
 venv/
 env/
 .main_env/
 
-# OS-specific files
+# === OS-Specific Files ===
 .DS_Store
 Thumbs.db
 
-# Jupyter Notebook checkpoints
+# === Jupyter ===
 .ipynb_checkpoints/
 
-# VSCode settings
+# === VSCode and IDE ===
 .vscode/
-
-# Excel/Output files
-*.xlsx
-*.xls
-*.csv
-
-# Logs and temporary files
-*.log
-*.tmp
-*.bak
-
-# Docker
-*.tar
-*.img
-docker-compose.override.yml
-
-# GitHub/IDE
 .idea/
 *.swp
 *.swo
 
-# dotenv / secrets
+# === Logs and Temp ===
+*.log
+*.tmp
+*.bak
+
+# === Output Files ===
+*.xlsx
+*.xls
+*.csv
+
+# === Docker ===
+*.tar
+*.img
+docker-compose.override.yml
+
+# === Env Files ===
 .env
 .env.*
 
-# Compiled Python extensions
+# === Compiled Extensions ===
 build/
 dist/
 *.egg-info/
 
-# Local test reports
+# === Coverage ===
 coverage/
 htmlcov/
 .cache/
