@@ -1,8 +1,9 @@
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 import time
 import pandas as pd
@@ -11,10 +12,12 @@ import os
 HISTORY_FILE = "Questax_project_history.xlsx"
 
 def setup_driver():
-    options = webdriver.ChromeOptions()
-    # options.add_argument('--headless')  # Uncomment for silent run
-    options.add_argument('--window-size=1920,1080')
-    return webdriver.Chrome(options=options)
+    options = Options()
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--headless")  
+   # options.add_argument('--window-size=1920,1080')
+    return webdriver.Chrome(service=Service(), options=options)
 
 def scroll_to_load_all(driver):
     last_height = driver.execute_script("return document.body.scrollHeight")
@@ -64,11 +67,12 @@ def scrape_all_projects():
             link = f"https://questax.com/projektportal/#id-{project_id}"
 
             if project_id not in existing_ids:
-                print(f"🆕 New Project Found:")
+                print("=" * 100)
                 print(f"Title     : {title}")
                 print(f"Project ID: {project_id}")
                 print(f"Link      : {link}")
-                print("-" * 100)
+                print("=" * 100)
+                print("\n")
 
                 new_projects.append({
                     "Project ID": project_id,
