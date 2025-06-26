@@ -12,13 +12,15 @@ import os
 HISTORY_FILE = "Questax_project_history.xlsx"
 
 def setup_driver():
-    options = Options()
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--headless")  
-    options.binary_location = "/usr/bin/chromium"
-    service = Service(executable_path="/usr/bin/chromedriver")
-    return webdriver.Chrome(service=Service(), options=options)
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--window-size=1920,1080")
+    chrome_options.binary_location = "/usr/bin/chromium"
+    return  webdriver.Chrome(service=Service("/usr/bin/chromedriver"), options=chrome_options)
+
 
 def scroll_to_load_all(driver):
     last_height = driver.execute_script("return document.body.scrollHeight")
