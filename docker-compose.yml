@@ -1,0 +1,7 @@
+services:
+  selenium:
+    build: .
+    container_name: selenium_app
+    restart: always
+    environment:
+      - CHROME_BIN=/usr/bin/chromium
